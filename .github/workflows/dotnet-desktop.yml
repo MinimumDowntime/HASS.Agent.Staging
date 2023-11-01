@@ -82,15 +82,11 @@ jobs:
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the Nuget Packages
-      run:
+      run: |
         nuget restore src/HASS.Agent.Staging.sln
-        #msbuild src/HASS.Agent.Staging.sln #/t:Restore /p:Configuration=$env:Configuration
+        msbuild src/HASS.Agent.Staging.sln #/t:Restore /p:Configuration=$env:Configuration
       #env:
-      #  Configuration: ${{ matrix.configuration }}
-
-    - name: Build the HASS Agent Staging sln
-      run:
-        msbuild src/HASS.Agent.Staging.sln
+      #  Configuration: ${{ matrix.configuration }}       
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     #- name: Decode the pfx
@@ -120,6 +116,6 @@ jobs:
     #    path: src/HASS.Agent.Staging/bin/
 
     - name: Debugging artifact paths
-      run:
-        cd src/HASS.Agent.Staging
-        get-childitem
+      run: |
+        Set-Location src\HASS.Agent.Staging
+        Get-Childitem
