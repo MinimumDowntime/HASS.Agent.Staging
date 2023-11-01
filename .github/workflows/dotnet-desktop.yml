@@ -113,8 +113,13 @@ jobs:
     #  run: Remove-Item -path $env:Wap_Project_Directory\GitHubActionsWorkflow.pfx
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: HASS.Agent.Staging
-        path: src/HASS.Agent.Staging/bin/
+    #- name: Upload build artifacts
+    #  uses: actions/upload-artifact@v3
+    #  with:
+    #    name: HASS.Agent.Staging
+    #    path: src/HASS.Agent.Staging/bin/
+
+    - name: Debugging artifact paths
+      run:
+        cd src/HASS.Agent.Staging
+        get-childitem
