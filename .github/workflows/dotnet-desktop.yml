@@ -108,12 +108,24 @@ jobs:
     #- name: Remove the pfx
     #  run: Remove-Item -path $env:Wap_Project_Directory\GitHubActionsWorkflow.pfx
 
-    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload build artifacts
+    #Upload project artifacts: https://github.com/marketplace/actions/upload-a-build-artifact
+    - name: Upload build artifacts (HASS Agent)
       uses: actions/upload-artifact@v3
       with:
-        name: HASS.Agent.Staging
-        path: src/HASS.Agent.Staging/
+        name: HASS.Agent (HASS Agent)
+        path: src/HASS.Agent.Staging/HASS.Agent/bin/Debug/net6.0-windows10.0.19041.0
+
+    - name: Upload build artifacts (HASS Agent Satellite Service)
+      uses: actions/upload-artifact@v3
+      with:
+        name: HASS.Agent.Satellite.Service
+        path: src/HASS.Agent.Staging/HASS.Agent.Satellite.Service/bin/Debug/net6.0-windows10.0.19041.0
+
+    - name: Upload build artifacts (HASS Agent Satellite Service)
+      uses: actions/upload-artifact@v3
+      with:
+        name: HASS.Agent.Shared
+        path: src/HASS.Agent.Staging/HASS.Agent.Shared/bin/Debug/net6.0-windows10.0.19041.0
 
     #- name: Debugging artifact paths
     #  run: |
