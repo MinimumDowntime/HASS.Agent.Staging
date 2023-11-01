@@ -112,7 +112,7 @@ jobs:
     - name: Upload build artifacts (HASS Agent)
       uses: actions/upload-artifact@v3
       with:
-        name: HASS.Agent (HASS Agent)
+        name: HASS.Agent
         path: src/HASS.Agent.Staging/HASS.Agent/bin/Debug/net6.0-windows10.0.19041.0
 
     - name: Upload build artifacts (HASS Agent Satellite Service)
