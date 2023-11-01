@@ -81,7 +81,7 @@ jobs:
     #  run: dotnet test
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Restore the Nuget Packages
+    - name: Restore the Nuget Packages and Build solution
       run: |
         nuget restore src/HASS.Agent.Staging.sln
         msbuild src/HASS.Agent.Staging.sln #/t:Restore /p:Configuration=$env:Configuration
