@@ -190,6 +190,4 @@ jobs:
         tag: ${{ github.event.inputs.releasetitle }}
         draft: true
         artifacts:
-          HASS.Agent/HASS.Agent.zip
-          HASS.Agent.Satellite.Service/HASS.Agent.Satellite.Service.zip
-          HASS.Agent.Shared/HASS.Agent.Shared.zip
+          HASS.Agent/HASS.Agent.zip,HASS.Agent.Satellite.Service/HASS.Agent.Satellite.Service.zip,HASS.Agent.Shared/HASS.Agent.Shared.zip
