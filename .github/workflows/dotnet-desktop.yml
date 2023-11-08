@@ -187,6 +187,7 @@ jobs:
     - name: Create Draft Release and Upload Build Artifacts
       uses: ncipollo/release-action@v1.10.0
       with:
+        tag: latest
         artifacts:
           HASS.Agent/HASS.Agent.zip
           HASS.Agent.Satellite.Service/HASS.Agent.Satellite.Service.zip
