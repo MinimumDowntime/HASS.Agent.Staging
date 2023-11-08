@@ -174,19 +174,15 @@ jobs:
         Compress-Archive -Path C:\HASS.Agent.Satellite.Service -DestinationPath C:\HASSRelease\HASS.Agent.Satellite.Service.zip
         Compress-Archive -Path C:\HASS.Agent.Shared -DestinationPath C:\HASSRelease\HASS.Agent.Shared.zip
 
-    - name: Verify zipped directories
-      run: Get-ChildItem C:\HASSRelease
-
-    #- name: Display structure of downloaded files
-    #  run: ls -R
-
     #draft a release, https://github.com/actions/create-release
-    #- uses: "marvinpinto/action-automatic-releases@latest"
-    #  with:
-    #    repo_token: "${{ secrets.GITHUB_TOKEN }}"
-    #    automatic_release_tag: ${{ github.event.inputs.releasetitle }}
-    #    prerelease: true
-    #    title: ${{ github.event.inputs.releasetitle }}
-    #    files: |
-    #      LICENSE.txt
-    #      *.jar
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: ${{ github.event.inputs.releasetitle }}
+        draft: true
+        prerelease: true
+        title: ${{ github.event.inputs.releasetitle }}
+        files: |
+          C:\HASSRelease\HASS.Agent.zip
+          C:\HASSRelease\HASS.Agent.Satellite.Service.zip
+          C:\HASSRelease\HASS.Agent.Shared.zip
