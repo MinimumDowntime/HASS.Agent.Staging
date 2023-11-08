@@ -48,12 +48,12 @@ on:
       #  description: 'Is this a pre-release?'
       #  required: true
       #  default: 'true'
-  push:
-    branches: [ "main" ]
-    tags:
-    - '*'
-  pull_request:
-    branches: [ "main" ]
+  #push:
+  #  branches: [ "main" ]
+  #  tags:
+  #  - '*'
+  #pull_request:
+  #  branches: [ "main" ]
 
 jobs:
   build:
