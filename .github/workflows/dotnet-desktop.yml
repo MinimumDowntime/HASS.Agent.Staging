@@ -160,9 +160,10 @@ jobs:
       run: |
         cd HASS.Agent
         zip -r HASS.Agent.zip ./
+        ls
 
-    - name: Create Draft Release and Upload Build Artifacts
-      uses: ncipollo/release-action@v1.13.0
-      with:
-        artifacts:
-          HASS.Agent/HASS.Agent.zip
+    #- name: Create Draft Release and Upload Build Artifacts
+    #  uses: ncipollo/release-action@v1.13.0
+    #  with:
+    #    artifacts:
+    #      HASS.Agent/HASS.Agent.zip
