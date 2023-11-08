@@ -129,7 +129,7 @@ jobs:
         name: HASS.Agent.Satellite.Service
         path: src/HASS.Agent.Staging/HASS.Agent.Satellite.Service/bin/Debug/net6.0-windows10.0.19041.0
 
-    - name: Upload build artifacts (HASS.Agent.Shared)
+    - name: Upload build artifacts (HASS Agent Shared)
       uses: actions/upload-artifact@v3
       with:
         name: HASS.Agent.Shared
@@ -140,12 +140,45 @@ jobs:
     #    Set-Location src\HASS.Agent.Staging
     #    Get-Childitem
 
-    #Download all of the build artifacts from GitHub to attach them to release
-    - name: Download Build Artifacts
-      uses: actions/download-artifact@v3.0.2
+    #create directories to download artifacts into
+    - name: Create HASS.Agent, HASS Agent Satellite Service, and HASS.Agent.Shared directories
+      run: |
+        New-Item -Path "C:\HASS.Agent" -ItemType Directory
+        New-Item -Path "C:\HASS.Agent.Satellite.Service" -ItemType Directory
+        New-Item -Path "C:\HASS.Agent.Shared" -ItemType Directory
+        New-Item -Path "C:\HASSRelease" -ItemType Directory
 
-    - name: Display structure of downloaded files
-      run: ls -R
+    #Download all of the build artifacts from GitHub to attach them to release
+    - name: Download Build Artifacts (HASS Agent)
+      uses: actions/download-artifact@v3.0.2
+      with:
+        name: HASS.Agent
+        path: C:\HASS.Agent
+
+    - name: Download Build Artifacts (HASS Agent Satellite Service)
+      uses: actions/download-artifact@v3.0.2
+      with:
+        name: HASS.Agent.Satellite.Service
+        path: C:\HASS.Agent.Satellite.Service
+
+    - name: Download Build Artifacts (HASS Agent Shared)
+      uses: actions/download-artifact@v3.0.2
+      with:
+        name: HASS.Agent.Shared
+        path: C:\HASS.Agent.Shared
+
+    #Zip each directory
+    - name: Compress directories
+      run: |
+        Compress-Archive -Path C:\HASS.Agent -DestinationPath C:\HASSRelease\HASS.Agent.zip
+        Compress-Archive -Path C:\HASS.Agent.Satellite.Service -DestinationPath C:\HASSRelease\HASS.Agent.Satellite.Service.zip
+        Compress-Archive -Path C:\HASS.Agent.Shared -DestinationPath C:\HASSRelease\HASS.Agent.Shared.zip
+
+    - name: Verify zipped directories
+      run: Get-ChildItem C:\HASSRelease
+
+    #- name: Display structure of downloaded files
+    #  run: ls -R
 
     #draft a release, https://github.com/actions/create-release
     #- uses: "marvinpinto/action-automatic-releases@latest"
