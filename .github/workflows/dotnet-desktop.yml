@@ -146,6 +146,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: [build]
+    permissions:
+      contents: write
     steps:
     - name: Create directories for Build Artifacts to download
       run: |
@@ -183,7 +185,7 @@ jobs:
         zip -r HASS.Agent.Shared.zip ./
 
     - name: Create Draft Release and Upload Build Artifacts
-      uses: ncipollo/release-action@v1.13.0
+      uses: ncipollo/release-action@v1.10.0
       with:
         artifacts:
           HASS.Agent/HASS.Agent.zip
