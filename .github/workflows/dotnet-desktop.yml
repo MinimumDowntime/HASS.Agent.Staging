@@ -178,10 +178,10 @@ jobs:
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: ${{ github.event.inputs.releasetitle }}
+        automatic_release_tag: latest
         draft: true
         prerelease: true
-        title: ${{ github.event.inputs.releasetitle }}
+        #title: ${{ github.event.inputs.releasetitle }}
         files: |
           C:\HASSRelease\HASS.Agent.zip
           C:\HASSRelease\HASS.Agent.Satellite.Service.zip
