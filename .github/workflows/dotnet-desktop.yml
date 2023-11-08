@@ -157,14 +157,33 @@ jobs:
         name: HASS.Agent
         path: HASS.Agent
 
-    - name: Compress HASS Agent directory
+    - name: Download Build Artifacts (HASS Agent Satellite Service)
+      uses: actions/download-artifact@v3.0.2
+      with:
+        name: HASS.Agent.Satellite.Service
+        path: HASS.Agent.Satellite.Service
+
+    - name: Download Build Artifacts (HASS Agent Shared)
+      uses: actions/download-artifact@v3.0.2
+      with:
+        name: HASS.Agent.Shared
+        path: HASS.Agent.Shared
+
+    - name: Compress HASS Agent directories
       run: |
         cd HASS.Agent
         zip -r HASS.Agent.zip ./
-        ls
+        cd ../
+        cd HASS.Agent.Satellite.Service
+        zip -r HASS.Agent.Satellite.Service.zip ./
+        cd ../
+        cd HASS.Agent.Shared
+        zip -r HASS.Agent.Shared.zip ./
 
-    #- name: Create Draft Release and Upload Build Artifacts
-    #  uses: ncipollo/release-action@v1.13.0
-    #  with:
-    #    artifacts:
-    #      HASS.Agent/HASS.Agent.zip
+    - name: Create Draft Release and Upload Build Artifacts
+      uses: ncipollo/release-action@v1.13.0
+      with:
+        artifacts:
+          HASS.Agent/HASS.Agent.zip
+          HASS.Agent.Satellite.Service/HASS.Agent.Satellite.Service.zip
+          HASS.Agent.Shared/HASS.Agent.Shared.zip
