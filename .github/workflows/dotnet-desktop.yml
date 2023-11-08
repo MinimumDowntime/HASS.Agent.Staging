@@ -138,51 +138,31 @@ jobs:
     #- name: Debugging artifact paths
     #  run: |
     #    Set-Location src\HASS.Agent.Staging
-    #    Get-Childitem
+    #    Get-Childitem       
 
-    #create directories to download artifacts into
-    - name: Create HASS.Agent, HASS Agent Satellite Service, and HASS.Agent.Shared directories
+  #draft a release, https://github.com/actions/create-release  
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create directories for Build Artifacts to download
       run: |
-        New-Item -Path "C:\HASS.Agent" -ItemType Directory
-        New-Item -Path "C:\HASS.Agent.Satellite.Service" -ItemType Directory
-        New-Item -Path "C:\HASS.Agent.Shared" -ItemType Directory
-        New-Item -Path "C:\HASSRelease" -ItemType Directory
-
-    #Download all of the build artifacts from GitHub to attach them to release
+        mkdir HASS.Agent
+        mkdir HASS.Agent.Satellite.Service
+        mkdir HASS.Agent.Shared
+    
     - name: Download Build Artifacts (HASS Agent)
       uses: actions/download-artifact@v3.0.2
       with:
         name: HASS.Agent
-        path: C:\HASS.Agent
+        path: HASS.Agent
 
-    - name: Download Build Artifacts (HASS Agent Satellite Service)
-      uses: actions/download-artifact@v3.0.2
-      with:
-        name: HASS.Agent.Satellite.Service
-        path: C:\HASS.Agent.Satellite.Service
-
-    - name: Download Build Artifacts (HASS Agent Shared)
-      uses: actions/download-artifact@v3.0.2
-      with:
-        name: HASS.Agent.Shared
-        path: C:\HASS.Agent.Shared
-
-    #Zip each directory
-    - name: Compress directories
+    - name: Compress HASS Agent directory
       run: |
-        Compress-Archive -Path C:\HASS.Agent -DestinationPath C:\HASSRelease\HASS.Agent.zip
-        Compress-Archive -Path C:\HASS.Agent.Satellite.Service -DestinationPath C:\HASSRelease\HASS.Agent.Satellite.Service.zip
-        Compress-Archive -Path C:\HASS.Agent.Shared -DestinationPath C:\HASSRelease\HASS.Agent.Shared.zip
+        cd HASS.Agent
+        zip -r HASS.Agent.zip ./
 
-    #draft a release, https://github.com/actions/create-release
-    - uses: "marvinpinto/action-automatic-releases@latest"
+    - name: Create Draft Release and Upload Build Artifacts
+      uses: ncipollo/release-action@v1.13.0
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: latest
-        draft: true
-        prerelease: true
-        #title: ${{ github.event.inputs.releasetitle }}
-        files: |
-          C:\HASSRelease\HASS.Agent.zip
-          C:\HASSRelease\HASS.Agent.Satellite.Service.zip
-          C:\HASSRelease\HASS.Agent.Shared.zip
+        artifacts:
+          HASS.Agent/HASS.Agent.zip
